@@ -11,9 +11,9 @@
         <link href="css/bootstrap.css" rel="stylesheet" type="text/css"/>
         <title>Modificar Registro - UMG</title>
         <style>
-            /* Fondo con degradado Azul (Igual al Listar) */
+            /* Fondo con degradado Verde (Igual al Listar) */
             body {
-                background: linear-gradient(135deg, #00c6ff 0%, #0072ff 100%);
+                background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);
                 min-height: 100vh;
                 display: flex;
                 align-items: center;
@@ -29,11 +29,11 @@
                 border-radius: 25px;
                 box-shadow: 0 15px 35px rgba(0,0,0,0.2);
                 width: 100%;
-                max-width: 600px; /* Un poco más ancha que el login */
+                max-width: 600px; 
             }
 
             h2 {
-                color: #0056b3;
+                color: #1e8449;
                 font-weight: bold;
                 text-transform: uppercase;
                 margin-bottom: 30px;
@@ -57,8 +57,8 @@
             }
 
             .form-control:focus {
-                border-color: #007bff;
-                box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+                border-color: #2ecc71;
+                box-shadow: 0 0 0 0.2rem rgba(46, 204, 113, 0.25);
             }
 
             /* Botones estilo redondeado */
@@ -72,16 +72,16 @@
             }
 
             .btn-update {
-                background-color: #007bff;
+                background-color: #2ecc71;
                 color: white;
                 border: none;
                 width: 100%;
             }
 
             .btn-update:hover {
-                background-color: #0056b3;
+                background-color: #27ae60;
                 transform: translateY(-2px);
-                box-shadow: 0 5px 15px rgba(0,123,255,0.3);
+                box-shadow: 0 5px 15px rgba(39, 174, 96, 0.3);
             }
 
             .btn-back {
@@ -98,6 +98,7 @@
             .btn-back:hover {
                 background-color: #e2e6ea;
                 color: #333;
+                text-decoration: none;
             }
         </style>
     </head>
@@ -127,6 +128,12 @@
                 <div class="form-group">
                     <label>Contraseña / Password:</label>
                     <input class="form-control" type="password" name="txtPass" value="<%= p.getPass()%>" placeholder="Nueva contraseña">
+                </div>
+
+                <!-- NUEVO CAMPO DE CORREO ELECTRÓNICO CON VALIDACIÓN NULL -->
+                <div class="form-group">
+                    <label>Correo Electrónico:</label>
+                    <input class="form-control" type="email" name="txtCorreo" value="<%= (p.getCorreo() != null) ? p.getCorreo() : "" %>" placeholder="ejemplo@correo.com" required>
                 </div>
 
                 <div class="form-group">

@@ -9,9 +9,9 @@
         <link href="css/bootstrap.css" rel="stylesheet" type="text/css"/>
         <title>Nuevo Registro - UMG</title>
         <style>
-            /* Fondo con degradado Azul (Consistente con todo el sistema) */
+            /* Fondo con degradado VERDE (Consistente con todo el sistema) */
             body {
-                background: linear-gradient(135deg, #00c6ff 0%, #0072ff 100%);
+                background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);
                 min-height: 100vh;
                 display: flex;
                 align-items: center;
@@ -31,7 +31,7 @@
             }
 
             h2 {
-                color: #0056b3;
+                color: #1e8449;
                 font-weight: bold;
                 text-transform: uppercase;
                 margin-bottom: 30px;
@@ -55,8 +55,8 @@
             }
 
             .form-control:focus {
-                border-color: #00c6ff;
-                box-shadow: 0 0 0 0.2rem rgba(0, 198, 255, 0.2);
+                border-color: #2ecc71;
+                box-shadow: 0 0 0 0.2rem rgba(46, 204, 113, 0.2);
             }
 
             /* Botones estilo redondeado */
@@ -71,16 +71,16 @@
             }
 
             .btn-add-submit {
-                background-color: #00c6ff;
+                background-color: #2ecc71;
                 color: white;
                 width: 100%;
-                box-shadow: 0 4px 10px rgba(0, 198, 255, 0.3);
+                box-shadow: 0 4px 10px rgba(46, 204, 113, 0.3);
             }
 
             .btn-add-submit:hover {
-                background-color: #00a0cc;
+                background-color: #27ae60;
                 transform: translateY(-2px);
-                box-shadow: 0 6px 15px rgba(0, 198, 255, 0.4);
+                box-shadow: 0 6px 15px rgba(39, 174, 96, 0.4);
             }
 
             .btn-back {
@@ -121,6 +121,12 @@
                 <div class="form-group">
                     <label>Contraseña de Acceso:</label>
                     <input class="form-control" type="password" name="txtPass" placeholder="Mínimo 6 caracteres" required>
+                </div>
+
+                <!-- NUEVO CAMPO DE CORREO ELECTRÓNICO -->
+                <div class="form-group">
+                    <label>Correo Electrónico:</label>
+                    <input class="form-control" type="email" name="txtCorreo" placeholder="ejemplo@correo.com" required>
                 </div>
 
                 <div class="form-group">

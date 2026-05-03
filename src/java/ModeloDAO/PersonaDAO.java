@@ -30,6 +30,7 @@ public class PersonaDAO implements CRUD {
                 per.setNom(rs.getString("Nombres"));
                 per.setIdDepartamento(rs.getInt("IdDepartamento"));
                 per.setNomDepartamento(rs.getString("nomDepto")); 
+                per.setCorreo(rs.getString("Correo")); // <-- AGREGADO
                 list.add(per);
             }
         } catch (Exception e) {
@@ -52,6 +53,8 @@ public class PersonaDAO implements CRUD {
                 per.setDpi(rs.getString("DPI"));
                 per.setNom(rs.getString("Nombres"));
                 per.setIdDepartamento(rs.getInt("IdDepartamento"));
+                per.setCorreo(rs.getString("Correo")); // <-- AGREGADO
+                per.setPass(rs.getString("Password")); // Agregamos la clave para que no se pierda al editar
             }
         } catch (Exception e) {
             System.err.println("Error list " + e);
@@ -61,7 +64,8 @@ public class PersonaDAO implements CRUD {
 
     @Override
     public boolean add(Persona per) {
-        String sql = "insert into persona(DPI, Nombres, IdDepartamento, Password) values(?,?,?,?)";
+        // <-- CAMBIO EN EL SQL PARA AGREGAR CORREO
+        String sql = "insert into persona(DPI, Nombres, IdDepartamento, Password, Correo) values(?,?,?,?,?)";
         try {
             con = cn.getConnection();
             ps = con.prepareStatement(sql);
@@ -75,6 +79,7 @@ public class PersonaDAO implements CRUD {
             }
             
             ps.setString(4, per.getPass());
+            ps.setString(5, per.getCorreo()); // <-- AGREGADO EL DATO DEL CORREO
             ps.executeUpdate();
             return true;
         } catch (Exception e) {
@@ -85,7 +90,8 @@ public class PersonaDAO implements CRUD {
 
     @Override
     public boolean edit(Persona per) {
-        String sql = "update persona set DPI=?, Nombres=?, IdDepartamento=? where Id=?";
+        // <-- CAMBIO EN EL SQL Y ORDEN DE LOS ?
+        String sql = "update persona set DPI=?, Nombres=?, IdDepartamento=?, Correo=? where Id=?";
         try {
             con = cn.getConnection();
             ps = con.prepareStatement(sql);
@@ -97,8 +103,9 @@ public class PersonaDAO implements CRUD {
             } else {
                 ps.setInt(3, per.getIdDepartamento());
             }
-            ps.setInt(4, per.getId());
-      
+            
+            ps.setString(4, per.getCorreo()); // <-- AGREGADO
+            ps.setInt(5, per.getId()); // <-- ESTE PASÓ A SER EL 5
 
             int resultado = ps.executeUpdate();
             if (resultado > 0) {
@@ -128,27 +135,26 @@ public class PersonaDAO implements CRUD {
     }
 
     public Persona validar(String nom, String pass) {
-    Persona per = null; // Empezamos como null
-    // Usamos "Nombres" y "Password" que son los nombres que usas en el resto del DAO
-    String sql = "SELECT * FROM persona WHERE Nombres=? AND Password=?"; 
-    try {
-        con = cn.getConnection();
-        ps = con.prepareStatement(sql);
-        ps.setString(1, nom);
-        ps.setString(2, pass);
-        rs = ps.executeQuery();
-        
-        if (rs.next()) { // Usamos if porque solo esperamos un resultado
-            per = new Persona(); // Solo creamos el objeto si se encontró en la DB
-            per.setId(rs.getInt("Id"));
-            per.setNom(rs.getString("Nombres"));
-            per.setDpi(rs.getString("DPI"));
-            // No es necesario setear el pass aquí, pero puedes hacerlo
+        Persona per = null; // Empezamos como null
+        // Usamos "Nombres" y "Password" que son los nombres que usas en el resto del DAO
+        String sql = "SELECT * FROM persona WHERE Nombres=? AND Password=?"; 
+        try {
+            con = cn.getConnection();
+            ps = con.prepareStatement(sql);
+            ps.setString(1, nom);
+            ps.setString(2, pass);
+            rs = ps.executeQuery();
+            
+            if (rs.next()) { // Usamos if porque solo esperamos un resultado
+                per = new Persona(); // Solo creamos el objeto si se encontró en la DB
+                per.setId(rs.getInt("Id"));
+                per.setNom(rs.getString("Nombres"));
+                per.setDpi(rs.getString("DPI"));
+                // No es necesario setear el pass aquí, pero puedes hacerlo
+            }
+        } catch (Exception e) {
+            System.err.println("Error en validar DAO: " + e);
         }
-    } catch (Exception e) {
-        System.err.println("Error en validar DAO: " + e);
+        return per; // Si no lo encuentra, devolverá null
     }
-    return per; // Si no lo encuentra, devolverá null
-}
-    
 }

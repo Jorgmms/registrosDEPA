@@ -1,4 +1,3 @@
-
 package Controlador;
 
 import Modelo.Persona;
@@ -11,7 +10,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-
 public class Controlador extends HttpServlet {
 
     String listar="vistas/listar.jsp";
@@ -20,11 +18,11 @@ public class Controlador extends HttpServlet {
     Persona p=new Persona();
     PersonaDAO dao=new PersonaDAO();
     int id;
+    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
@@ -37,12 +35,12 @@ public class Controlador extends HttpServlet {
         }
     }
 
-
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String acceso="";
         String action=request.getParameter("accion");
+        
         if(action.equalsIgnoreCase("listar")){
             acceso=listar;            
         }else if(action.equalsIgnoreCase("add")){
@@ -52,14 +50,23 @@ public class Controlador extends HttpServlet {
             String dpi=request.getParameter("txtDpi");
             String nom=request.getParameter("txtNom");
             String pass=request.getParameter("txtPass");
+            String correo=request.getParameter("txtCorreo"); // <-- CAPTURAMOS EL CORREO
             int idDepto = Integer.parseInt(request.getParameter("txtIdDepto"));
             
             p.setDpi(dpi);
             p.setNom(nom);
             p.setPass(pass);
+            p.setCorreo(correo); // <-- LO GUARDAMOS EN EL MODELO
             p.setIdDepartamento(idDepto);
             
-            dao.add(p);
+            // VERIFICAMOS SI SE GUARDÓ EN BD
+            boolean guardado = dao.add(p); 
+            
+            if(guardado){
+                // ¡LA MAGIA! ENVIAMOS EL CORREO
+                Utilidades.ServicioCorreo.enviarConfirmacion(correo, nom);
+            }
+            
             acceso=listar;
         }
         else if(action.equalsIgnoreCase("editar")){
@@ -71,12 +78,14 @@ public class Controlador extends HttpServlet {
             String dni=request.getParameter("txtDpi");
             String nom=request.getParameter("txtNom");
             String pass=request.getParameter("txtPass");
+            String correo=request.getParameter("txtCorreo"); // <-- CAPTURAMOS EL CORREO
             int idDepto = Integer.parseInt(request.getParameter("txtIdDepto"));
             
             p.setId(id);
             p.setDpi(dni);
             p.setNom(nom);
             p.setPass(pass);
+            p.setCorreo(correo); // <-- LO GUARDAMOS EN EL MODELO
             p.setIdDepartamento(idDepto);
             
             dao.edit(p);
@@ -88,6 +97,7 @@ public class Controlador extends HttpServlet {
             dao.eliminar(id);
             acceso=listar;
         }
+        
         RequestDispatcher vista=request.getRequestDispatcher(acceso);
         vista.forward(request, response);
     }
@@ -98,10 +108,8 @@ public class Controlador extends HttpServlet {
         processRequest(request, response);
     }
 
-   
     @Override
     public String getServletInfo() {
         return "Short description";
-    }// </editor-fold>
-
+    }
 }

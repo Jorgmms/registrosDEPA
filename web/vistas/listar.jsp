@@ -8,33 +8,32 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link href="css/bootstrap.css" rel="stylesheet" type="text/css"/>
-        <title>Sistema de Registros UMG - Panel Azul</title>
+        <title>Sistema de Registros UMG - Panel Verde</title>
         <style>
-            /* Fondo con degradado AZUL PROFUNDO Y SUAVE */
+            /* Fondo con degradado VERDE */
             body {
-                background: linear-gradient(135deg, #00c6ff 0%, #0072ff 100%);
-                /* Alternativa más sobria: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%) */
+                background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);
                 min-height: 100vh;
                 margin: 0;
                 font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
                 padding: 40px 0;
             }
 
-            /* Tarjeta blanca ancha y elegante para la tabla */
+            /* Tarjeta blanca para la tabla */
             .tabla-container {
-                background: rgba(255, 255, 255, 0.98); /* Casi opaco para mejor contraste */
+                background: rgba(255, 255, 255, 0.98);
                 border-radius: 25px;
                 padding: 40px;
                 box-shadow: 0 15px 40px rgba(0,0,0,0.2);
                 width: 90%;
-                max-width: 1150px;
+                max-width: 1250px; /* Un poco más ancha para que quepa el correo cómodamente */
                 margin: auto;
                 border: 1px solid rgba(255,255,255,0.2);
             }
 
-            /* Título y estilos de texto en AZUL */
+            /* Título en VERDE */
             h1 {
-                color: #0056b3; /* Azul Oscuro Profesional */
+                color: #1e8449;
                 font-weight: bold;
                 text-transform: uppercase;
                 letter-spacing: 2px;
@@ -42,24 +41,24 @@
             }
 
             .user-badge {
-                background: #e3f2fd; /* Azul muy pálido */
+                background: #e9f7ef; /* Verde muy pálido */
                 padding: 10px 20px;
                 border-radius: 15px;
-                border: 1px solid #90caf9; /* Borde azul suave */
+                border: 1px solid #a9dfbf; /* Borde verde suave */
                 color: #333;
                 display: inline-block;
             }
 
-            /* Estilos de la Tabla - AZUL */
+            /* Estilos de la Tabla - VERDE */
             .table {
                 border-radius: 15px;
-                overflow: hidden; /* Para que los bordes redondeados funcionen */
+                overflow: hidden;
                 border: none;
                 margin-top: 20px;
             }
 
             .table thead {
-                background: linear-gradient(to right, #007bff, #0056b3); /* Cabecera degradada Azul */
+                background: linear-gradient(to right, #2ecc71, #27ae60);
                 color: white;
             }
 
@@ -78,13 +77,13 @@
             }
 
             .table tbody tr:hover {
-                background-color: #e3f2fd; /* Resaltado azul muy suave al pasar el mouse */
+                background-color: #e9f7ef;
                 transition: 0.3s;
             }
 
-            /* Botones Personalizados y Redondeados */
+            /* Botones Personalizados */
             .btn-custom {
-                border-radius: 25px; /* Súper redondeados */
+                border-radius: 25px;
                 padding: 10px 25px;
                 font-weight: bold;
                 transition: 0.3s;
@@ -94,37 +93,37 @@
                 letter-spacing: 1px;
             }
 
-            /* Botón AGREGAR (Azul Vibrante) */
+            /* Botón AGREGAR (Verde Esmeralda) */
             .btn-add { 
-                background-color: #00c6ff; 
+                background-color: #2ecc71; 
                 color: #fff;
-                box-shadow: 0 4px 12px rgba(0,198,255,0.3);
+                box-shadow: 0 4px 12px rgba(46,204,113,0.3);
             } 
             .btn-add:hover { 
-                background-color: #00a0cc; 
-                box-shadow: 0 6px 18px rgba(0,198,255,0.5);
+                background-color: #28b463; 
+                box-shadow: 0 6px 18px rgba(46,204,113,0.5);
                 transform: translateY(-2px);
             }
 
-            /* Botón CERRAR SESIÓN (Azul Grisáceo/Sobrio) */
+            /* Botón CERRAR SESIÓN (Gris Bosque) */
             .btn-logout { 
-                background-color: #546e7a; 
+                background-color: #515a5a; 
                 color: white; 
             }
             .btn-logout:hover { 
-                background-color: #37474f; 
+                background-color: #424949; 
             }
 
-            /* Botones de Acción (Editar y Eliminar) */
-            .btn-edit { background-color: #ffca28; color: #333; } /* Amarillo para contraste */
-            .btn-edit:hover { background-color: #ffb300; }
+            /* Botones de Acción */
+            .btn-edit { background-color: #f1c40f; color: #333; }
+            .btn-edit:hover { background-color: #d4ac0d; }
 
-            .btn-delete { background-color: #ef5350; color: white; } /* Rojo suave */
-            .btn-delete:hover { background-color: #d32f2f; }
+            .btn-delete { background-color: #e74c3c; color: white; }
+            .btn-delete:hover { background-color: #c0392b; }
             
             /* Badge para el departamento */
             .depto-badge {
-                background-color: #1e88e5; /* Azul intermedio */
+                background-color: #27ae60;
                 color: white;
                 padding: 5px 12px;
                 border-radius: 10px;
@@ -135,7 +134,6 @@
     </head>
     
     <%
-        // Protección de sesión (mantener tu lógica existente)
         if(session.getAttribute("usuarioLogueado") == null) {
             response.sendRedirect("index.jsp");
         }
@@ -147,7 +145,7 @@
                 <div>
                     <h1>Listado de Personas</h1>
                     <div class="user-badge shadow-sm">
-                        Bienvenido, <strong style="color: #0056b3;"><%= session.getAttribute("usuarioLogueado") %></strong> (UMG Registros)
+                        Bienvenido, <strong style="color: #1e8449;"><%= session.getAttribute("usuarioLogueado") %></strong> (UMG Registros)
                     </div>
                 </div>
                 
@@ -170,6 +168,8 @@
                             <th>ID</th>
                             <th>DPI / Documento</th>
                             <th>Nombres Completos</th>
+                            <!-- NUEVA COLUMNA DE CORREO -->
+                            <th>Correo Electrónico</th>
                             <th>Departamento</th>
                             <th>Acciones Disponibles</th>
                         </tr>
@@ -187,6 +187,10 @@
                             <td class="text-center fw-bold" style="color: #666;"><%= per.getId()%></td>
                             <td class="text-center"><%= per.getDpi()%></td>
                             <td class="text-capitalize text-start" style="color: #333;"><%= per.getNom()%></td>
+                            <!-- IMPRESIÓN DEL CORREO -->
+                            <td class="text-center" style="color: #555;">
+                                <%= (per.getCorreo() != null && !per.getCorreo().isEmpty()) ? per.getCorreo() : "Sin correo" %>
+                            </td>
                             <td class="text-center">
                                 <span class="depto-badge">
                                     <%= (per.getNomDepartamento() != null) ? per.getNomDepartamento() : "Sin Asignar" %>

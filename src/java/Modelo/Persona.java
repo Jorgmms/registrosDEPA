@@ -1,4 +1,3 @@
-
 package Modelo;
 
 public class Persona {
@@ -8,14 +7,16 @@ public class Persona {
     int idDepartamento;
     String nomDepartamento;
     String pass;
+    String correo; // <-- NUEVO CAMPO AGREGADO
 
     public Persona() {
     }
 
-    public Persona(String dpi, String nom, String pass) {
+    public Persona(String dpi, String nom, String pass, String correo) {
         this.dpi = dpi;
         this.nom = nom;
         this.pass = pass;
+        this.correo = correo;
     }
 
     public int getId() {
@@ -65,5 +66,13 @@ public class Persona {
     public void setPass(String pass) {
         this.pass = pass;
     }
-    
+
+    // --- GETTER Y SETTER DEL CORREO ---
+    public String getCorreo() {
+        return correo;
+    }
+
+    public void setCorreo(String correo) {
+        this.correo = correo;
+    }
 }
